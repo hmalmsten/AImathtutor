@@ -24,7 +24,7 @@ const CardList = () => {
         "https://github.com/AaltoRSE/CollaborativeAI/tree/main/task_template/frontend_poetry",
     },
     {
-      name: "Mealplan task",
+      name: "Meal plan task",
       description: ["Plan your meals with AI"],
       link: "./mp.png",
       image_credit:
@@ -32,6 +32,16 @@ const CardList = () => {
       task_link: "https://mealplan-task1-mealplan-arena.node01.ki-lab.nrw",
       code_link:
         "https://github.com/AaltoRSE/CollaborativeAI/tree/main/task_template/frontend_mealplan",
+    },
+    {
+      name: "Recipe task",
+      description: ["Plan a recipe for a dish with AI"],
+      link: "./rp.png",
+      image_credit:
+        "Image credit: Image by richardbeaurega; CC BY-ND 4.0; https://www.emojis.com/emoji/recipe-book-GsQnkLyZfJ",
+      task_link: "#",
+      code_link:
+        "https://github.com/AaltoRSE/CollaborativeAI/tree/main/task_template/frontend_recipe",
     }
   ]);
 
