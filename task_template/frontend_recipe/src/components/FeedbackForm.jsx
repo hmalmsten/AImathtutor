@@ -8,11 +8,11 @@ const FeedbackForm = ({ viewPointRef, isRatingSubmitted, setIsRatingSubmitted })
   const [aiPerformanceRating, setAiPerformanceRating] = useState(null);
   const [coordinationRating, setCoordinationRating] = useState(null);
   const [efficiencyRating, setEfficiencyRating] = useState(null);
+  const [modelInfo, setModelInfo] = useState(null)
 
-
-  const handleMetricsSubmit = () => {
+  const handleMetricsSubmit = async () => {
     setIsRatingSubmitted(true);
-    taskService.finishTask(
+    const modelName = await taskService.finishTask(
       {
         "collaboration_metric": collaborationRating,
         "ai_performance_metric": aiPerformanceRating,
@@ -20,6 +20,7 @@ const FeedbackForm = ({ viewPointRef, isRatingSubmitted, setIsRatingSubmitted })
         "efficiency_metric": efficiencyRating
       }
     )
+    setModelInfo(modelName["modelInfo"])
   }
 
   return (
@@ -108,7 +109,7 @@ const FeedbackForm = ({ viewPointRef, isRatingSubmitted, setIsRatingSubmitted })
       </div>
       {isRatingSubmitted 
         ? <div className="after-rating-submitted">
-            <h4>Thank you! The model that you worked with was GPT-4o.</h4>
+            <h4>Thank you! The model that you worked with was {modelInfo}</h4>
             <button type="submit" className="reset-button" onClick={() => window.location.reload()}> Restart </button>
           </div>
         : <div>
