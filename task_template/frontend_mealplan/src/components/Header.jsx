@@ -6,7 +6,8 @@ const Header = () => {
         <h2 style={{fontWeight: "normal"}}> Benchmarking collaborative capabilities of AI in the wild </h2>
       </div>
       <nav className="navbar">
-        <a href="https://leaderboard-draft.onrender.com/" target="_blank">Leaderboard</a>
+        <a href="https://collaborativeai.org.aalto.fi/" target="_blank">Home page</a>
+        <a href="https://collaborativeai.org.aalto.fi/leaderboard" target="_blank">Leaderboard</a>
       </nav>
     </div>
   );
