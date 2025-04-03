@@ -33,15 +33,8 @@ const finishTask = (rating) => {
       task_name: "poetry_task",
     },
   };
-  console.log(ratingjson);
-  axios
-    .post(`/api/v1/task/finish`, ratingjson)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  const request = axios.post(`${baseUrl}/finish`, ratingjson)
+  return request.then(response => response.data)
 };
 
 export default {
