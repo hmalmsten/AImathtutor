@@ -8,6 +8,7 @@ import ConversationDisplay from "./components/ConversationDisplay"
 import TaskDescription from './components/TaskDescription';
 import RecipeDescriptionForm from './components/RecipeDescriptionForm';
 import TutorialPopUp from './components/TutorialPopUp';
+import SurveyButton from './components/SurveyButton'
 import "./index.css";
 
 const App = () => {
@@ -41,6 +42,7 @@ const App = () => {
     <>
       <Header />
       <TaskDescription />
+      <SurveyButton />
       {/* <TutorialPopUp /> */}
       <RecipeDescriptionForm recipeDescription={recipeDescription} setRecipeDescription={setRecipeDescription} messages={messages} isDisabled={isDisabled} setIsDisabled={setIsDisabled} setIsLoading={setIsLoading} addMessage={addMessage}/>
       <div className="main-interaction">

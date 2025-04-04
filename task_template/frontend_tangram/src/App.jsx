@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FinishButton from "./components/FinishButton";
 import FeedbackForm from "./components/FeedbackForm";
+import SurveyButton from './components/SurveyButton'
 import "./index.css";
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
   return (
     <>
       <Header />
+      <SurveyButton />
       <div className="main-interaction">
         {(isRatingSubmitted || isFinishClicked) && (
           <div className="main-interaction-overlay"> </div>
