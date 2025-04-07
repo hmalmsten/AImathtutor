@@ -36,6 +36,8 @@ services:
       - 127.0.0.1:27017:27017
     networks:
       - mynetwork
+    mem_limit: 512m
+    cpus: "0.5"
   nginx:
     image: docker.io/library/nginx:alpine
     environment:
