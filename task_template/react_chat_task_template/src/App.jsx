@@ -39,7 +39,14 @@ const App = () => {
         setLoading(true);
 
         try {
-            const aiResponse = await taskService.submitUserInput({ message: userInput });
+            const aiResponse = await taskService.submitUserInput(
+              {
+                "inputData": {
+                  "comment": userInput,
+                  "poem": userInput
+                }
+              }
+            );
             setMessages([...newMessages, { sender: "AI", text: aiResponse.response }]);
         } catch (error) {
             console.error("Error sending message:", error);

@@ -10,6 +10,7 @@ const submitUserInput = async (newUserMessage) => {
     console.log("Response: " + response.data);
   } catch (e) {
     console.error("Error submitting user input:", e);
+    console.error("Full Axios error:", e.response?.data || e);
     throw new Error("Failed to get a response from the model.");
   }
   
@@ -20,7 +21,7 @@ const finishTask = (rating) => {
   const ratingjson = {
     metrics: {
       rating: rating, 
-      task_name: "placeholder" //change this to your task name
+      task_name: "math tutoring" 
     }
   }
   const request = axios.post(`${baseUrl}/finish`, ratingjson)
