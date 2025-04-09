@@ -5,8 +5,15 @@ const baseUrl = "/api/v1/task"
 const submitUserInput = async (newUserMessage) => {
   console.log("new user message on task service " + newUserMessage);
 
+  const inputObject = {
+    inputData: {
+      text: newUserMessage,
+      objective: "math tutoring"
+    }
+  };
+
   try {
-    const response = await axios.post(`${baseUrl}/process`, newUserMessage); 
+    const response = await axios.post(`${baseUrl}/process`, inputObject); 
     console.log("Response: " + response.data);
   } catch (e) {
     console.error("Error submitting user input:", e);

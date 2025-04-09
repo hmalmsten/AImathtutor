@@ -39,13 +39,13 @@ const App = () => {
         setLoading(true);
 
         try {
-            const aiResponse = await taskService.submitUserInput(
-              {
+            const aiResponse = await taskService.submitUserInput( userInput
+              /*{
                 "inputData": {
                   "comment": userInput,
                   "poem": userInput
                 }
-              }
+              }*/
             );
             setMessages([...newMessages, { sender: "AI", text: aiResponse.response }]);
         } catch (error) {
