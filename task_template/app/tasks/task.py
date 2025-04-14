@@ -1,4 +1,5 @@
 import os
+import logging
 
 # define the Task
 from task_examples import (
@@ -11,7 +12,10 @@ from task_examples import (
     recipe
 )
 
+logger = logging.getLogger(__name__)
+
 currentTask = os.environ.get("TASK_NAME")
+logger.info(f"TASK NAME SELECTED: {currentTask}")
 
 if currentTask == "tangram":
     task = tangram.Tangram()

@@ -15,13 +15,11 @@ const submitUserInput = async (newUserMessage) => {
   try {
     const response = await axios.post(`${baseUrl}/process`, inputObject); 
     console.log("Response: " + response.data);
+    return response.data;
   } catch (e) {
     console.error("Error submitting user input:", e);
-    console.error("Full Axios error:", e.response?.data || e);
     throw new Error("Failed to get a response from the model.");
   }
-  
-  return response.data;
 };
 
 const finishTask = (rating) => {

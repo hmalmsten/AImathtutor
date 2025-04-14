@@ -46,11 +46,11 @@ def get_system_prompt(objective: str) -> str:
                         3. Only provide responses with one question at a time. The students should not be overloaded with too much information at once.
                         4. When correcting students, provide them with the theory that they need to solve, and give them an opportunity to fix their mistake themself. 
                         Do not fix it for them, you should not provide solutions to individual steps to students, only theory to help.
+
             """
         return system_prompt
 
-class Poetry(Task): #RENAMED FROM Poetry
-
+class Poetry(Task): 
 
     def process_model_answer(self, answer: ModelResponse) -> TaskDataResponse:
         # Again, we ignore the potential image here...
@@ -61,48 +61,56 @@ class Poetry(Task): #RENAMED FROM Poetry
         process pieces' data and plug them into the prompt
         """
         # This could include an image, but for this task, we currently don't supply one
-        logger.info(request)
+        print("FUNCTION WAS CALLED")
+        logger.info("FUNCTION WAS CALLED")
 
-        """linetag = "COMMENT" if request.inputData["comment"] else "NEWLINE"
-        poemline = f"POEM : {json.dumps(request.inputData['poem'])}"
-        newline = f"{linetag} : {request.text}"""
+        try:
+            logger.info(f"INCOMING REQUEST: {request}")
 
-        # FOR MATH TUTOR:
-        user_input = request.text
+            """linetag = "COMMENT" if request.inputData["comment"] else "NEWLINE"
+            poemline = f"POEM : {json.dumps(request.inputData['poem'])}"
+            newline = f"{linetag} : {request.text}"""
 
-        """return TaskRequest(
-            text=f"{poemline} \n{newline}",
-            system=get_system_prompt(request.objective),
-            image=None,
-        )"""
+            user_input = request.inputData["text"]
+            objective = request.inputData["objective"]
+            logger.info(f"EXTRACTED INPUT: {user_input}, OBJECTIVE: {objective}")
 
-        # FOR MATH TUTOR:
-        return TaskRequest(
-        text=user_input,
-        system=get_system_prompt(request.objective),
-        image=None,
-    )
+            """return TaskRequest(
+                text=f"{poemline} \n{newline}",
+                system=get_system_prompt(request.objective),
+                image=None,
+            )"""
+
+            return TaskRequest(
+                text=user_input,
+                system=get_system_prompt(objective),
+                image=None,
+        )
+
+        except Exception as e:
+            logger.error(f"❌ ERROR GENERATING MODEL REQUEST: {str(e)}", exc_info=True)
+            raise
 
     def get_requirements(self) -> TaskRequirements:
         return TaskRequirements(needs_text=True, needs_image=False)
     
-class PoetryOpenAI(OpenAITask): # RENAMED FROM PoetryOpenAI
+class PoetryOpenAI(OpenAITask): 
     """ Implementation of the Poetry Task as an OpenAI like task"""
 
     def process_model_answer_openAI(self, answer: ModelResponse) -> TaskDataResponse:
         # Again, we ignore the potential image here...        
         return TaskDataResponse(text=answer.text)
 
-    def generate_model_request_openAI(self, request: OpenAIBasedDataRequest) -> OpenAIBasedRequest:
+    def generate_model_request_openAI(self, request: OpenAIBasedDataRequest) -> OpenAIBasedRequest:  #OpenAIBasedDataRequest
         """Generate prompt endpoint:
         process pieces' data and plug them into the prompt
         """
         # Add the system prompt (which is not allowed from the frontend)
+        
         system_message = get_system_prompt(request.objective)
         messages = [{"role" : "system", "content" : system_message}]
         messages.extend([element for element in request.userMessages])
         return OpenAIBasedRequest(messages=messages)
-        
 
     def get_requirements(self) -> TaskRequirements:
         return TaskRequirements(needs_text=True, needs_image=False)
