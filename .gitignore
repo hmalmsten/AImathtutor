@@ -195,3 +195,7 @@ app/saml/certs/*
 
 # MySQL database
 data/**/*
+
+# Local Rating Mongo DB
+mongodb/**/*
+mongodb
