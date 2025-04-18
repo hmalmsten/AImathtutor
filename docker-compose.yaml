@@ -54,5 +54,6 @@ services:
     container_name: nginx-server
     networks:
       - mynetwork
+
 networks:
   mynetwork:

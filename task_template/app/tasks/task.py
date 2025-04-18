@@ -15,7 +15,7 @@ from task_examples import (
 logger = logging.getLogger(__name__)
 
 currentTask = os.environ.get("TASK_NAME")
-logger.info(f"TASK NAME SELECTED: {currentTask}")
+logger.info(f"!!!!!!!!!!!!!!!TASK NAME SELECTED: {currentTask}")
 
 if currentTask == "tangram":
     task = tangram.Tangram()
