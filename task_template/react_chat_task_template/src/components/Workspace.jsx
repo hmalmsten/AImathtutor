@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
+import { useState } from "react"; //useRef,
 
 const Workspace = ({ onSendMessage }) => {
     const [userInput, setUserInput] = useState("");
-    const inputRef = useRef(null);
+    //const inputRef = useRef(null);
 
     const handleInput = (event) => {
         if (inputRef.current) {
@@ -17,14 +17,14 @@ const Workspace = ({ onSendMessage }) => {
         onSendMessage(userInput); 
         setUserInput("");
 
-        if (inputRef.current) {
+        /*if (inputRef.current) {
             inputRef.current.innerText = ""; 
-        }
+        }*/
     };
 
     return (
         <div className="dialogue-wrapper">
-            <h2>Workspace</h2>
+            <h2>Chat</h2>
             <div 
                 className="dialogue" 
                 ref={inputRef}
@@ -37,7 +37,10 @@ const Workspace = ({ onSendMessage }) => {
                     cursor: "text",
                 }}
             ></div>
-            <button onClick={handleSend}>Send</button>
+            <button 
+                className="send-btn" 
+                onClick={handleSend}>Send
+            </button>
         </div>
     );
 };
