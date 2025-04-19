@@ -4,8 +4,6 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FinishButton from './components/FinishButton';
 import FeedbackForm from "./components/FeedbackForm";
-//import Workspace from "./components/Workspace";
-//import ConversationDisplay from "./components/ConversationDisplay";
 import ChatPanel from "./components/ChatPanel";
 import StepsAndTheoryDisplay from "./components/StepsAndTheoryDisplay";
 
@@ -46,13 +44,15 @@ const App = () => {
 
       try {
           const aiResponse = await taskService.submitUserInput(userInput);
-          console.log(JSON.stringify(aiResponse));
-          setMessages([...newMessages, { sender: "AI", text: aiResponse.text }]);
-          setTheory(aiResponse.userSteps || []); 
-          setSteps(aiResponse.theory || ""); 
-          console.log(messages);
-          console.log(theory);
-          console.log(steps);
+          const aiTextResponse = aiResponse.text;
+          console.log("AI RESPONSE IN APP: " + JSON.stringify(aiResponse));
+          console.log("AI RESPONSE TEXT IN APP: " + JSON.stringify(aiTextResponse.text));
+          setMessages([...newMessages, { sender: "AI", text: aiTextResponse.text }]);
+          setTheory(aiTextResponse.userSteps || []); 
+          setSteps(aiTextResponse.theory || ""); 
+          console.log("MESSAGES: " + messages);
+          console.log("THEORY: " + theory);
+          console.log("STEPS: " + steps);
 
       } catch (error) {
           console.error("Error sending message:", error);

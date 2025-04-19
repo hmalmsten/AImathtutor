@@ -19,8 +19,8 @@ const submitUserInput = async (newUserMessage) => {
                 "Ocp-Apim-Subscription-Key": process.env.OPENAI_API_KEY
             }
         });
-        console.log("RESPONSE: " + JSON.stringify(response));
-        console.log("Response data: " + JSON.stringify(response.data));
+        //console.log("RESPONSE: " + JSON.stringify(response));
+        //console.log("Response data: " + JSON.stringify(response.data));
         return response.data;
 
     } catch (e) {

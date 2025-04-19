@@ -73,7 +73,7 @@ class Poetry(Task):
         process pieces' data and plug them into the prompt
         """
         # This could include an image, but for this task, we currently don't supply one
-        logger.info("FUNCTION WAS CALLED")
+        #logger.info("FUNCTION WAS CALLED")
 
         try:
             logger.info(f"INCOMING REQUEST: {request}")
@@ -81,6 +81,9 @@ class Poetry(Task):
             user_input = request.inputData["text"]
             objective = request.inputData["objective"]
             logger.info(f"EXTRACTED INPUT: {user_input}, OBJECTIVE: {objective}")
+
+            #prompt = get_system_prompt(objective)
+            #logger.info(f"!!!!!!!!!!! SYSTEM PROMPT: {prompt} !!!!!!!!!!!!!")
 
             return TaskRequest(
                 text=user_input,
@@ -107,6 +110,8 @@ class PoetryOpenAI(OpenAITask):
         process pieces' data and plug them into the prompt
         """
         # Add the system prompt (which is not allowed from the frontend)
+
+        #logger.info("!!!!!!!!!!!!!! WRONG FUNCTION WAS CALLED")
         
         system_message = get_system_prompt(request.objective)
         messages = [{"role" : "system", "content" : system_message}]

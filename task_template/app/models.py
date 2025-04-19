@@ -37,8 +37,8 @@ class ModelResponse(BaseModel):
     image: Optional[str] = Field(default=None, nullable=True)
     
     # additions for math tutor
-    userSteps: Optional[List[str]] = []
-    theory: Optional[str] = None
+    # userSteps: Optional[List[str]] = []
+    # theory: Optional[str] = None
 
 
 class TaskDataResponse(BaseModel):
