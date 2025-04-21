@@ -37,22 +37,26 @@ const App = () => {
     };
 
 
-    const sendMessage = async (userInput) => {
+    const handleMessage = async (userInput) => {
         const newMessages = [...messages, { sender: "User", text: userInput }];
         setMessages(newMessages);
         setLoading(true);
 
       try {
           const aiResponse = await taskService.submitUserInput(userInput);
-          const aiTextResponse = aiResponse.text;
-          console.log("AI RESPONSE IN APP: " + JSON.stringify(aiResponse));
-          console.log("AI RESPONSE TEXT IN APP: " + JSON.stringify(aiTextResponse.text));
+          console.log("AI RESPONSE: " + JSON.stringify(aiResponse));
+
+          const innerString = aiResponse.text;
+          const aiTextResponse = JSON.parse(innerString);
+          console.log("AI TEXT RESPONSE: " + JSON.stringify(aiTextResponse));
+        
           setMessages([...newMessages, { sender: "AI", text: aiTextResponse.text }]);
-          setTheory(aiTextResponse.userSteps || []); 
-          setSteps(aiTextResponse.theory || ""); 
-          console.log("MESSAGES: " + messages);
-          console.log("THEORY: " + theory);
-          console.log("STEPS: " + steps);
+          setTheory(aiTextResponse.theory || ""); 
+          setSteps(aiTextResponse.userSteps || []); 
+
+          console.log("MESSAGES: " + JSON.stringify(messages));
+          console.log("THEORY: " + JSON.stringify(aiTextResponse.theory));
+          console.log("STEPS: " + JSON.stringify(aiTextResponse.userSteps));
 
       } catch (error) {
           console.error("Error sending message:", error);
@@ -61,29 +65,8 @@ const App = () => {
       } finally {
           setLoading(false);
       }
-
-        
+  
     };
-
-    const handleAIResponse = async (newMessages, input) => {
-        try {
-            const aiResponse = await taskService.submitUserInput(input);
-            setMessages([...newMessages, { sender: "AI", text: aiResponse.text }]);
-            setTheory(aiResponse.userSteps || []); 
-            setSteps(aiResponse.theory || ""); 
-
-        } catch (error) {
-            console.error("Error sending message:", error);
-            setMessages([...newMessages, { sender: "AI", text: "Error: Could not get a response." }]);
-
-        } finally {
-            setLoading(false);
-        }
-    };
-
-
-    /*           <Workspace onSendMessage={sendMessage} />
-                <ConversationDisplay messages={messages} loading={loading} />*/
     
     return (
         <>
@@ -92,7 +75,7 @@ const App = () => {
                 {(isRatingSubmitted || isFinishClicked) && (
                   <div className="main-interaction-overlay"> </div>
                 )}
-                <ChatPanel messages={messages} loading={loading} onSendMessage={sendMessage} />
+                <ChatPanel messages={messages} loading={loading} onHandleMessage={handleMessage} />
                 <StepsAndTheoryDisplay steps={steps} theory={theory} loading={loading} />
             </div>
             <FinishButton isFinishClicked={isFinishClicked} isRatingSubmitted={isRatingSubmitted} toggleFinish={toggleFinish} />

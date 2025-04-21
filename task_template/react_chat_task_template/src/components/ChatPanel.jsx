@@ -1,9 +1,15 @@
 import { useState, useRef, useEffect } from "react";
+import 'katex/dist/katex.min.css';
+import { InlineMath, BlockMath } from 'react-katex';
 
-const ChatPanel = ({ messages, loading, onSendMessage }) => {
+const ChatPanel = ({ messages, loading, onHandleMessage }) => {
     const [userInput, setUserInput] = useState("");
     const inputRef = useRef(null);
     const chatEndRef = useRef(null);
+
+    useEffect(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages, loading]);
 
     const handleInput = () => {
         if (inputRef.current) {
@@ -14,8 +20,8 @@ const ChatPanel = ({ messages, loading, onSendMessage }) => {
     const handleSend = () => {
         if (!userInput.trim()) return;
 
-        onSendMessage(userInput);
-        setUserInput("");
+        onHandleMessage(userInput);
+        
         if (inputRef.current) {
             inputRef.current.innerText = "";
         }
@@ -28,9 +34,20 @@ const ChatPanel = ({ messages, loading, onSendMessage }) => {
         }
     };
 
-    useEffect(() => {
-        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages, loading]);
+    const renderMath = (text) => {
+        const regexInline = /\$(.*?)\$/g; // Inline LaTeX: $...$
+        const regexBlock = /\$\$(.*?)\$\$/g; // Block LaTeX: $$...$$
+      
+        text = text.replace(regexBlock, (match, latex) => {
+          return `<BlockMath math="${latex}" />`; 
+        });
+      
+        text = text.replace(regexInline, (match, latex) => {
+          return `<InlineMath math="${latex}" />`;  
+        });
+      
+        return text;
+      };
 
     return (
         <div className="dialogue-wrapper">
@@ -39,7 +56,12 @@ const ChatPanel = ({ messages, loading, onSendMessage }) => {
                 <div className="chat-history">
                     {messages.map((msg, index) => (
                         <div key={index} className={`message ${msg.sender.toLowerCase()}`}>
-                            <strong>{msg.sender}:</strong> {msg.text}
+                            <strong>{msg.sender}: </strong>
+                            <span
+                                dangerouslySetInnerHTML={{
+                                    __html: renderMath(msg.text), 
+                                }}
+                            />
                         </div>
                     ))}
                     {loading && <p><em>Loading...</em></p>}
