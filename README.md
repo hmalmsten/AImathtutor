@@ -1,3 +1,11 @@
+## INSTALL
+
+navigate to react_chat_task_template, then:
+npm install katex react-katex
+(might need to update permissions and/or unconnect from VPN for this)
+
+! NOTE: doesn't work correctly yet !
+
 # Collaborative AI Arena
 
 The collaborative AI arena is intended to serve as a basis for evaluation of collaboration between AI and Humans. The idea is to design and evaluate tasks which are performed with input from both sides, and figure out if the collaboration was successful.
