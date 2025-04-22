@@ -59,6 +59,8 @@ def get_system_prompt(objective: str) -> str:
                             "theory": "<Optional: Provide concise and relevant theory based on the student's current challenge.>"
                         *closing curly bracket here*
 
+                        ! NOTE: present formulas in standard LateX format !
+
                 """
         return system_prompt
 

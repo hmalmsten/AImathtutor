@@ -1,10 +1,7 @@
 ## INSTALL
 
 navigate to react_chat_task_template, then:
-npm install katex react-katex
-(might need to update permissions and/or unconnect from VPN for this)
-
-! NOTE: doesn't work correctly yet !
+npm install --save react-latex-next
 
 # Collaborative AI Arena
 

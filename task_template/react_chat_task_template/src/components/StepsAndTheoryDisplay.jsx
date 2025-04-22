@@ -1,20 +1,5 @@
 import 'katex/dist/katex.min.css';
-import { InlineMath, BlockMath } from 'react-katex';
-
-const renderMath = (text) => {
-    const regexInline = /\$(.*?)\$/g; // Inline LaTeX: $...$
-    const regexBlock = /\$\$(.*?)\$\$/g; // Block LaTeX: $$...$$
-  
-    text = text.replace(regexBlock, (match, latex) => {
-      return `<BlockMath math="${latex}" />`;  
-    });
-  
-    text = text.replace(regexInline, (match, latex) => {
-      return `<InlineMath math="${latex}" />`; 
-    });
-  
-    return text;
-};
+import Latex from 'react-latex-next';
 
 const StepsAndTheoryDisplay = ({ steps, theory, loading }) => {
     return (
@@ -27,13 +12,7 @@ const StepsAndTheoryDisplay = ({ steps, theory, loading }) => {
                     {steps.length > 0 ? (
                         <ul>
                             {steps.map((step, index) => (
-                                <li key={index}>
-                                   <span
-                                        dangerouslySetInnerHTML={{
-                                            __html: renderMath(step), 
-                                        }}
-                                    />
-                                </li>
+                                <li key={index}> <Latex>{step}</Latex></li>
                             ))}
                         </ul>
                     ) : (
@@ -44,12 +23,9 @@ const StepsAndTheoryDisplay = ({ steps, theory, loading }) => {
                 <div className="theory-space">
                   <h3>Theory:</h3>
                         {theory ? (
-                            <span
-                                dangerouslySetInnerHTML={{
-                                    __html: renderMath(theory),
-                                }}
-                            />
-                        ) : <p> </p>}
+                            <Latex>{theory}</Latex>
+                        ) : 
+                            <p> </p>}
                 </div>
             </div>
 

@@ -46,8 +46,17 @@ const App = () => {
           const aiResponse = await taskService.submitUserInput(userInput);
           console.log("AI RESPONSE: " + JSON.stringify(aiResponse));
 
-          const innerString = aiResponse.text;
-          const aiTextResponse = JSON.parse(innerString);
+          const innerText = aiResponse.text;
+
+          //const aiTextResponse = JSON.parse(innerString);
+          let aiTextResponse;
+          try {
+            aiTextResponse = JSON.parse(innerText);
+          } catch (innerError) {
+            console.error("Failed to parse AI response text:", innerError);
+            setMessages([...newMessages, { sender: "AI", text: "Error: Couldn't parse the AI's response." }]);
+            return;
+          }
           console.log("AI TEXT RESPONSE: " + JSON.stringify(aiTextResponse));
         
           setMessages([...newMessages, { sender: "AI", text: aiTextResponse.text }]);

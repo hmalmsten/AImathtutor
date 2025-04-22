@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import 'katex/dist/katex.min.css';
-import { InlineMath, BlockMath } from 'react-katex';
+import Latex from 'react-latex-next';
 
 const ChatPanel = ({ messages, loading, onHandleMessage }) => {
     const [userInput, setUserInput] = useState("");
@@ -34,21 +34,6 @@ const ChatPanel = ({ messages, loading, onHandleMessage }) => {
         }
     };
 
-    const renderMath = (text) => {
-        const regexInline = /\$(.*?)\$/g; // Inline LaTeX: $...$
-        const regexBlock = /\$\$(.*?)\$\$/g; // Block LaTeX: $$...$$
-      
-        text = text.replace(regexBlock, (match, latex) => {
-          return `<BlockMath math="${latex}" />`; 
-        });
-      
-        text = text.replace(regexInline, (match, latex) => {
-          return `<InlineMath math="${latex}" />`;  
-        });
-      
-        return text;
-      };
-
     return (
         <div className="dialogue-wrapper">
             <h2>Conversation</h2>
@@ -56,12 +41,7 @@ const ChatPanel = ({ messages, loading, onHandleMessage }) => {
                 <div className="chat-history">
                     {messages.map((msg, index) => (
                         <div key={index} className={`message ${msg.sender.toLowerCase()}`}>
-                            <strong>{msg.sender}: </strong>
-                            <span
-                                dangerouslySetInnerHTML={{
-                                    __html: renderMath(msg.text), 
-                                }}
-                            />
+                            <strong>{msg.sender}: </strong><Latex>{msg.text}</Latex>
                         </div>
                     ))}
                     {loading && <p><em>Loading...</em></p>}

@@ -26,7 +26,7 @@ ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 # COPY frontend code
 COPY ./react_chat_task_template ./frontend
 # Install frontend, clear dist folder
-RUN cd frontend && npm install && npm run build && ls && pwd && mv dist ../ && cd .. && rm -r frontend
+RUN cd frontend && npm install \ && npm install react-latex-next \ && npm run build && ls && pwd && mv dist ../ && cd .. && rm -r frontend
 # COPY backend code
 COPY ./app .
 
