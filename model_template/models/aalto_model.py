@@ -36,7 +36,7 @@ class AaltoModel(AIModel):
 
     async def get_response(self, message: TaskInput) -> TaskOutput:
         model = ChatOpenAI(
-            base_url="https://aalto-openai-apigw.azure-api.net/v1/openai/gpt4-1106-preview/",
+            base_url="https://aalto-openai-apigw.azure-api.net/v1/openai/gpt4-turbo/",
             default_headers=default_headers,
         )
 
