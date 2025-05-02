@@ -15,7 +15,7 @@ default_headers = {"Ocp-Apim-Subscription-Key": os.environ["OPENAI_API_KEY"]}
 
 
 ChatOpenAI(
-    base_url="https://aalto-openai-apigw.azure-api.net/v1/openai/gpt4-1106-preview/",
+    base_url= "https://aalto-openai-apigw.azure-api.net/v1/openai/gpt4-1106-preview/",
     default_headers=default_headers,
 )
 
@@ -35,8 +35,9 @@ class AaltoModel(AIModel):
         logger.info(metrics_json)
 
     async def get_response(self, message: TaskInput) -> TaskOutput:
+        logger.info("!!!!!!!!!!!!!!!!!!!!!!!!! HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         model = ChatOpenAI(
-            base_url="https://aalto-openai-apigw.azure-api.net/v1/openai/gpt4-1106-preview/",
+            base_url= "https://aalto-openai-apigw.azure-api.net/v1/openai/gpt4-1106-preview/",
             default_headers=default_headers,
         )
 
