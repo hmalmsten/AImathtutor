@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import FeedbackForm from "./components/FeedbackForm";
 import TutorialPopUp from './components/TutorialPopUp';
 import ThemeForm from './components/ThemeForm';
+import SurveyButton from './components/SurveyButton'
 import "./index.css";
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
     <>
       <Header />
       <TaskDescription />
+      <SurveyButton />
       <TutorialPopUp />
       <ThemeForm theme={theme} setTheme={setTheme} isDisabled={isDisabled} setIsDisabled={setIsDisabled} setIsLoading={setIsLoading} addMessage={addMessage}/>
       <div className="main-interaction">

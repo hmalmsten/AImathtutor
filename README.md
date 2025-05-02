@@ -55,7 +55,8 @@ To run locally you will need docker installed!
 In addition to docker, you will need to set three environment variables in a .env file in the source folder (you can use .env_exmaple as a template):
 
 - TASK_DOCKERFILE: This refers to the dockerfile of the Task you want to test.
-  - There are currently 3 options: `Dockerfile_poetry`, `Dockerfile_tangram` and `Dockerfile_gesture`.
+  - There are currently 5 already made tasks that you can try out: `Dockerfile_poetry`, `Dockerfile_tangram`, `Dockerfile_gesture`. `Dockerfile_mealplan`. and `Dockerfile_recipe`.
+  - If you're using the 2 React templates to create your own task: `Dockerfile_react_chat_template` or `Dockerfile_react_template` based on which template you are using.
 - MODEL: Refers to the model that is supposed to be used. There are currently 5 "default" models.
   - 1. aalto: A model using the Aalto APIs. This model requires you to use an Aalto OpenAI API key and be on the Aalto network
   - 2. aalto_image: Similar to aalto but has image processing capabilities

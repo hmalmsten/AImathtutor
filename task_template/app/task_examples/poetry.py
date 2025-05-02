@@ -56,8 +56,8 @@ def get_system_prompt(objective: str) -> str:
 
                         {{
                             "text": "<Your conversational response to the student.>",
-                            "userSteps": ["<Keep updated. Short bullet-point steps summarizing what the student has done so far>"],
-                            "theory": "<Optional: Provide concise and relevant theory based on the student's current challenge.>"
+                            "userSteps": ["<KEEP UPDATED, DO NOT IGNORE. Short bullet-point steps summarizing what the student has done so far>"],
+                            "theory": "<Optional: Provide concise and relevant theory based on the student's current challenge. DO NOT IGNORE>"
                         }}
 
                         ! NOTE: present formulas in standard LateX format ! For example, to display "the integral of the square root of x^3-2x^2+1 in LateX format, it is \\[\\int{{\\sqrt{{x^3-2x^2+1}}}}\\] 

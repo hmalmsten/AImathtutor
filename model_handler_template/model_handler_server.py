@@ -3,7 +3,7 @@ from concurrent import futures
 import json
 import asyncio
 import random
-from database import AtlasClient
+from pymongo import MongoClient
 import os
 from datetime import datetime
 from pytz import timezone
@@ -23,9 +23,10 @@ port = 8061
 DB_NAME = "task_rating"
 COLLECTION_NAME = "informal"
 if not os.environ.get("ATLAS_URI", None) == None:
-    atlas_client = AtlasClient(os.environ["ATLAS_URI"], DB_NAME)
-    rating_collection = atlas_client.get_collection(COLLECTION_NAME)
-    atlas_client.ping()
+    atlas_client = MongoClient(os.environ["ATLAS_URI"])
+    rating_db = atlas_client[DB_NAME]
+    rating_collection = rating_db[COLLECTION_NAME]
+    atlas_client.server_info()  # This should error, if the client doesn't work
 
 print("Connected to Atlas instance! We are good to go!")
 
