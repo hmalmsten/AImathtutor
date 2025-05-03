@@ -41,7 +41,10 @@ class AaltoModel(AIModel):
             default_headers=default_headers,
         )
 
-        AIresponse = model.invoke(message.model_dump()["messages"])
+        AIresponse = model.bind(
+        response_format={"type": "json_object"}
+        ).invoke(message.model_dump()["messages"])
+
         taskResponse = TaskOutput()
         taskResponse.text = AIresponse.content
         return taskResponse
