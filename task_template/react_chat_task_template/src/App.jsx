@@ -36,6 +36,48 @@ const App = () => {
       setIsFinishClicked(!isFinishClicked);
     };
 
+    const tryParseJSON = (jsonString) => {
+        try {
+            return JSON.parse(jsonString);
+        } catch (err) {
+            return null;
+        }
+    };
+    
+    
+    const parseDeepJSON = (input, maxDepth = 5) => {
+        let result = input;
+        let depth = 0;
+      
+        while (typeof result === "string" && depth < maxDepth) {
+            const trimmed = result.trim();
+        
+            if (trimmed.startsWith("{") && trimmed.endsWith("}")) {
+                const parsed = tryParseJSON(trimmed);
+                if (parsed !== null) {
+                    result = parsed;
+                    depth++;
+                    continue;
+                }
+            }
+      
+            break;
+        }
+      
+        return result;
+    };
+
+    const parsedAIResponse = (rawResponse) => {
+      const deepParsed = parseDeepJSON(rawResponse); 
+      const finalText = parseDeepJSON(deepParsed.text); 
+    
+      return {
+        text: finalText.text || "",
+        userSteps: finalText.userSteps || [],
+        theory: finalText.theory || "",
+      };
+    };
+    
 
     const handleMessage = async (userInput) => {
         const newMessages = [...messages, { sender: "User", text: userInput }];
@@ -46,32 +88,22 @@ const App = () => {
           const aiResponse = await taskService.submitUserInput(userInput);
           console.log("AI RESPONSE: " + JSON.stringify(aiResponse));
 
-          let aiTextResponse;
-          try {
-              if (
-                  typeof aiResponse.text === "string" &&
-                  aiResponse.text.trim().startsWith("{") &&
-                  aiResponse.text.trim().endsWith("}")
-              ) {
-                  aiTextResponse = JSON.parse(aiResponse.text);
-              } else {
-                aiTextResponse = {
-                  text: aiResponse.text,
-                  userSteps: [],
-                  theory: "",
-                };
-              }
-          } catch (innerError) {
-            console.error("Failed to parse AI response text:", innerError);
-            setMessages([...newMessages, { sender: "AI", text: "Error: Couldn't parse the AI's response." }]);
-            return;
-          }
+          //const rawText = aiResponse.text;
+          //const parsed = parseDeepJSON(rawText);
+          
+          /*const aiTextResponse = {
+            text: parsed?.text || rawText,
+            userSteps: parsed?.userSteps || [],
+            theory: parsed?.theory || "",
+          };  */       
+          
+          const aiTextResponse = parsedAIResponse(aiResponse);
 
-          console.log("AI TEXT RESPONSE: " + JSON.stringify(aiTextResponse));
+          console.log("PARSED AI RESPONSE:", aiTextResponse);
         
           setMessages([...newMessages, { sender: "AI", text: aiTextResponse.text }]);
-          setTheory(aiTextResponse.theory || ""); 
-          setSteps(aiTextResponse.userSteps || []); 
+          setTheory(prevTheory => prevTheory + "\n" + (aiTextResponse.theory || "")); //setTheory(aiTextResponse.theory || ""); 
+          setSteps(prevSteps => [...prevSteps, ...(aiTextResponse.userSteps || [])]); //setSteps(aiTextResponse.userSteps || []); 
 
           console.log("MESSAGES: " + JSON.stringify(messages));
           console.log("THEORY: " + JSON.stringify(aiTextResponse.theory));
